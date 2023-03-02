@@ -26,15 +26,6 @@ router.get("/add", (req, res, next) => {
   /*****************
    * ADD CODE HERE *
    *****************/
-  // const newBook = new Book({
-  //   Title: "book 1",
-  //   Description: "dec 1",
-  //   Price: 100,
-  //   Author: "marcus",
-  //   Genre: "Novel",
-  // });
-  // Book.create(newBook).then(() => {});
-
   res.render("books/details", {
     title: "Add a book",
     books: { Title: "", Price: "", Author: "", Genre: "" },
@@ -46,6 +37,21 @@ router.post("/add", (req, res, next) => {
   /*****************
    * ADD CODE HERE *
    *****************/
+  const { title, price, author, genre } = req.body;
+
+  const newBook = new Book({
+    Title: title,
+    Price: price,
+    Author: author,
+    Genre: genre,
+  });
+
+  Book.create(newBook)
+    .then(() => res.redirect("/books"))
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
 });
 
 // GET the Book Details page in order to edit an existing Book
