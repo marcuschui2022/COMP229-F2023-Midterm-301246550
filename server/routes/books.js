@@ -37,8 +37,10 @@ router.post("/add", (req, res, next) => {
   /*****************
    * ADD CODE HERE *
    *****************/
+  // get form data
   const { title, price, author, genre } = req.body;
 
+  // init new book
   const newBook = new Book({
     Title: title,
     Price: price,
@@ -46,6 +48,7 @@ router.post("/add", (req, res, next) => {
     Genre: genre,
   });
 
+  // create new book
   Book.create(newBook)
     .then(() => res.redirect("/books"))
     .catch((err) => {
@@ -59,7 +62,10 @@ router.get("/:id", (req, res, next) => {
   /*****************
    * ADD CODE HERE *
    *****************/
+  // get book id
   let id = req.params.id;
+
+  // find by book id
   Book.findById({ _id: id }, (err, book) => {
     if (err) {
       console.error(err);
@@ -78,9 +84,13 @@ router.post("/:id", (req, res, next) => {
   /*****************
    * ADD CODE HERE *
    *****************/
+  // find by book id
   let id = req.params.id;
+
+  // get update data from form
   const { title, price, author, genre } = req.body;
 
+  // init book data
   let updateBook = Book({
     _id: id,
     Title: title,
@@ -89,6 +99,7 @@ router.post("/:id", (req, res, next) => {
     Genre: genre,
   });
 
+  // update exists book by id
   Book.updateOne({ _id: id }, updateBook, (err) => {
     if (err) {
       console.log(err);
@@ -104,8 +115,10 @@ router.get("/delete/:id", (req, res, next) => {
   /*****************
    * ADD CODE HERE *
    *****************/
+  // find by book id
   let id = req.params.id;
 
+  // remove book by id
   Book.remove({ _id: id }, (err) => {
     if (err) {
       console.log(err);
